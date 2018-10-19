@@ -2,3 +2,19 @@ language: node_js
 
 node_js:
   - "node"
+
+script:
+  - npm test
+  - node_modules/.bin/jshint src
+
+before_deploy:
+  - jsdoc src
+
+deploy:
+  - provider: pages
+  - skip-cleanup: true
+  - github_token: $GITHUBTOKEN
+  - keep-history: true
+  - local-dir: ./
+  - on:
+      branch: master
